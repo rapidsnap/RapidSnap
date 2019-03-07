@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace RapidShot
+namespace RapidShot.Input
 {
-    class Keyboard : NativeWindow, IDisposable
+    public class KeyboardHook : NativeWindow, IDisposable
     {
-        public enum ModifierKeys
+        [Flags]
+        public enum ModifierKeys : uint
         {
             None = 0,
             Alt = 1,
@@ -26,7 +27,7 @@ namespace RapidShot
         private Dictionary<int, Action<object, EventArgs>> _hotKeys;
         private static int _IDcounter;
 
-        public Keyboard()
+        public KeyboardHook()
         {
             _hotKeys = new Dictionary<int, Action<object, EventArgs>>();
             CreateHandle(new CreateParams());
@@ -40,10 +41,14 @@ namespace RapidShot
             return _IDcounter;
         }
 
+        public int AddHotKey(ModifierKeys modifier1, ModifierKeys modifier2, Keys key, Action<object, EventArgs> action)
+            => AddHotKey(modifier1 | modifier2, key, action);
+
+        public int AddHotKey(ModifierKeys modifier1, ModifierKeys modifier2, ModifierKeys modifier3, Keys key, Action<object, EventArgs> action)
+            => AddHotKey(modifier1 | modifier2 | modifier3, key, action);
+
         public void RemoveHotKey(int id)
-        {
-            UnregisterHotKey(Handle, id);
-        }
+            => UnregisterHotKey(Handle, id);
 
         protected override void WndProc(ref Message m)
         {

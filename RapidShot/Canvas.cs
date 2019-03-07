@@ -35,9 +35,9 @@ namespace RapidShot
             ShowInTaskbar = false;
 
             KeyDown += OnKeyDown;
-            MouseDown += OnMouseDown;
+            MouseDown += OnMouseClick;
             MouseMove += OnMouseMove;
-            MouseUp += OnMouseUp;
+            MouseUp += OnMouseRelease;
             Paint += OnPaint;
         }
 
@@ -47,7 +47,7 @@ namespace RapidShot
                 OnSnapTaken(null);
         }
 
-        private void OnMouseDown(object sender, MouseEventArgs e)
+        private void OnMouseClick(object sender, MouseEventArgs e)
         {
             if (_drawing)
                 return;
@@ -65,7 +65,7 @@ namespace RapidShot
             Invalidate();
         }
 
-        private void OnMouseUp(object sender, MouseEventArgs e)
+        private void OnMouseRelease(object sender, MouseEventArgs e)
         {
             if (_mouseStartPos.X == e.Location.X || _mouseStartPos.Y == e.Location.Y)
             {
@@ -76,7 +76,7 @@ namespace RapidShot
             var aspect = CalcScreenRes();
             var rectangle = GetRectangle(PointToScreen(_mouseStartPos), PointToScreen(e.Location), aspect);
 
-            using (var image = new Bitmap(rectangle.Width, rectangle.Height, PixelFormat.Format32bppArgb))
+            using (var image = new Bitmap(rectangle.Width, rectangle.Height, PixelFormat.Format24bppRgb))
             {
                 using (var g = Graphics.FromImage(image))
                 {

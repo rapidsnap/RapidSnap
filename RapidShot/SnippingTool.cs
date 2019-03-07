@@ -1,6 +1,8 @@
 ﻿using RapidSnap.Forms;
+using RapidSnap.Properties;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 namespace RapidShot
@@ -32,7 +34,6 @@ namespace RapidShot
 
                 _canvases.Add(canvas);
             }
-
         }
 
         public void OnSnapTaken(object sender, SnapEventArgs e)
@@ -49,26 +50,63 @@ namespace RapidShot
             if (e.Image == null)
                 return;
 
-            SaveToClipboard(e.Image);
+            SaveScreenshot(e.Image);
         }
         
-        public void TakeScreenShot()
+        public void TakeScreenshot()
         {
             Bitmap bitmap = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
             Graphics graphics = Graphics.FromImage(bitmap as Image);
 
             graphics.CopyFromScreen(0, 0, 0, 0, bitmap.Size);
 
-            SaveToClipboard(bitmap);
+            SaveScreenshot(bitmap);
 
             bitmap.Dispose();
             graphics.Dispose();
+        }
+
+        private void SaveScreenshot(Image image)
+        {
+            if (Settings.Default.SaveToClipboard)
+                SaveToClipboard(image);
+            else
+                SaveToDisk(image);
         }
 
         private void SaveToClipboard(Image image)
         {
             Clipboard.SetImage(image);
             MenuForm.MinimizeFootprint();
+        }
+
+        public void SaveToDisk(Image image)
+        {
+            var fileDiag = new SaveFileDialog()
+            {
+                Title = "Speichern des Koordinatensystems",
+                FileName = "Unbenannt",
+                Filter = "PNG |*.png|GIF |*.gif|Bitmap |*.bmp|JPEG |*.jpg",
+            };
+
+            fileDiag.FileOk += (s, e) =>
+            {
+                if (fileDiag.FileName == "")
+                    return;
+
+                var fileStream = fileDiag.OpenFile();
+                switch (fileDiag.FilterIndex)
+                {
+                    case 1: image.Save(fileStream, ImageFormat.Png); break;
+                    case 2: image.Save(fileStream, ImageFormat.Gif); break;
+                    case 3: image.Save(fileStream, ImageFormat.Bmp); break;
+                    case 4: image.Save(fileStream, ImageFormat.Jpeg); break;
+                }
+
+                fileStream.Close();
+            };
+
+            fileDiag.ShowDialog();
         }
     }
 }

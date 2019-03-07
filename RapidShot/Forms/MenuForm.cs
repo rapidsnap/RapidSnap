@@ -1,4 +1,5 @@
 ﻿using RapidShot;
+using RapidShot.Input;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -9,11 +10,13 @@ namespace RapidSnap.Forms
 {
     public partial class MenuForm : Form
     {
-        private SnippingTool _snippingTool;
-        private Container _container;
-        private NotifyIcon _notifyIcon;
-        private Keyboard _keyboard;
-        
+        private OptionForm optionForm;
+        private SnippingTool snippingTool;
+        private Container container;
+        private NotifyIcon notifyIcon;
+
+        public KeyboardHook KeyboardHook { get; private set; }
+
         [DllImport("psapi.dll")]
         static extern int EmptyWorkingSet(IntPtr hwProc);
 
@@ -27,20 +30,26 @@ namespace RapidSnap.Forms
             this.Text = Properties.Resources.StringApplicationName;
             this.WindowState = FormWindowState.Minimized;
             this.ShowInTaskbar = false;
+            KeyboardHook = new KeyboardHook();
+            optionForm = new OptionForm(this);
+            optionForm.Hide();
+            optionForm.LoadSettings();
 
             InitializeNotifyIcon();
-
-            _keyboard = new Keyboard();
-            _keyboard.AddHotKey(Keyboard.ModifierKeys.Alt, Keys.OemPipe, OnSnap);
 
             MinimizeFootprint();
         }
 
+        public void RegisterHotkeys()
+        {
+            optionForm.HKSnap.Register(OnSnap);
+        }
+
         private void InitializeNotifyIcon()
         {
-            _container = new Container();
+            container = new Container();
 
-            _notifyIcon = new NotifyIcon(_container)
+            notifyIcon = new NotifyIcon(container)
             {
                 ContextMenuStrip = new ContextMenuStrip(),
                 Icon = Properties.Resources.IconLogoLight,
@@ -65,31 +74,34 @@ namespace RapidSnap.Forms
             contextMenuStrip.Items.Add(new ToolStripSeparator());
             contextMenuStrip.Items.Add("Exit", null, OnApplicationExit);
 
-            _notifyIcon.ContextMenuStrip = contextMenuStrip;
+            notifyIcon.ContextMenuStrip = contextMenuStrip;
 
-            _notifyIcon.DoubleClick += OnDoubleClick;
-            _notifyIcon.BalloonTipClicked += OnOption;
+            notifyIcon.DoubleClick += OnDoubleClick;
+            notifyIcon.BalloonTipClicked += OnOption;
         }
 
         private void OnSnap(object sender, EventArgs e)
         {
-            if (_snippingTool?.IsSnapping ?? false)
+            if (snippingTool?.IsSnapping ?? false)
                 return;
 
-            _snippingTool = new SnippingTool();
-            _snippingTool.TakeSnap();
+            snippingTool = new SnippingTool();
+            snippingTool.TakeSnap();
         }
 
-        private void OnOption(object sender, EventArgs e) => new OptionForm().Show();
+        private void OnOption(object sender, EventArgs e)
+            => optionForm.Show();
 
-        private void OnUpdate(object sender, EventArgs e) => _notifyIcon.ShowBalloonTip(1000, "New Version", "Click here to get it now!", ToolTipIcon.Info);
+        private void OnUpdate(object sender, EventArgs e)
+            => notifyIcon.ShowBalloonTip(1000, "Newer Version available", "Click here to get it now!", ToolTipIcon.Info);
 
-        private void OnDoubleClick(object sender, EventArgs e) => new OptionForm().Show();
-        
+        private void OnDoubleClick(object sender, EventArgs e)
+            => OnOption(sender, e);
+            
         private void OnApplicationExit(object sender, EventArgs e)
         {
-            _notifyIcon.Dispose();
-            _keyboard.Dispose();
+            notifyIcon.Dispose();
+            KeyboardHook.Dispose();
             Dispose();
             Application.Exit();
         }
