@@ -83,6 +83,7 @@
             this.btn_update.TabIndex = 1;
             this.btn_update.Text = "Update";
             this.btn_update.UseVisualStyleBackColor = true;
+            this.btn_update.Click += new System.EventHandler(this.OnUpdateButtonClick);
             // 
             // cb_autoStart
             // 
@@ -131,9 +132,9 @@
             this.label2.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.label2.Location = new System.Drawing.Point(9, 131);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(28, 13);
+            this.label2.Size = new System.Drawing.Size(72, 13);
             this.label2.TabIndex = 6;
-            this.label2.Text = "v1.0";
+            this.label2.Text = "v1.0.0 Rev. 1";
             // 
             // gb_save
             // 

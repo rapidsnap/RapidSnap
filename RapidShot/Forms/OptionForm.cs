@@ -1,8 +1,9 @@
 ﻿using Microsoft.Win32;
-using RapidShot.Input;
 using RapidSnap.Input;
 using RapidSnap.Properties;
 using System;
+using System.Deployment.Application;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace RapidSnap.Forms
@@ -18,10 +19,11 @@ namespace RapidSnap.Forms
             InitializeComponent();
 
             this.menuForm = menuForm;
-            
-            HKSnap = new Hotkey(menuForm.KeyboardHook, btn_hkSnap);
+            HKSnap = new Hotkey(menuForm.KeyboardHook, btn_hkSnap, menuForm.OnSnap);
 
             cb_autoStart.CheckedChanged += OnAutoStartToggle;
+
+            LoadSettings();
         }
 
         public void LoadSettings()
@@ -31,8 +33,6 @@ namespace RapidSnap.Forms
             rb_clipboard.Checked = Settings.Default.SaveToClipboard;
             rb_disk.Checked = Settings.Default.SaveToDisk;
             HKSnap.Load(Settings.Default.HotkeySnap);
-
-            menuForm.RegisterHotkeys();
         }
 
         private void SaveSettings()
@@ -43,8 +43,6 @@ namespace RapidSnap.Forms
             Settings.Default.SaveToDisk = rb_disk.Checked;
             Settings.Default.HotkeySnap = HKSnap.Save();
             Settings.Default.Save();
-
-            menuForm.RegisterHotkeys();
         }
 
         private void OnAutoStartToggle(object sender, EventArgs e)
@@ -71,6 +69,50 @@ namespace RapidSnap.Forms
 
             SaveSettings();
             this.Hide();
+        }
+
+        private void OnUpdateButtonClick(object sender, EventArgs e)
+        {
+            UpdateCheckInfo info = null;
+
+            try
+            {
+                info = ApplicationDeployment.CurrentDeployment.CheckForDetailedUpdate();
+            }
+            catch (Exception)
+            {
+                return;
+            }
+
+            if (!info.UpdateAvailable)
+            {
+                MessageBox.Show("Hooray! Rapid Snap is up-to-date.");
+                return;
+            }
+
+            if (!info.IsUpdateRequired)
+            {
+                DialogResult result = MessageBox.Show("An update is available. Would you like to update the application now?", "Update Available", MessageBoxButtons.OKCancel);
+
+                if (result != DialogResult.OK)
+                    return;
+            }
+            else
+            {
+                MessageBox.Show("This application has detected a mandatory update from your current " +
+                    "version to version " + info.MinimumRequiredVersion.ToString() +
+                    ". The application will now install the update and restart.",
+                    "Update Available", MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
+
+            var success = menuForm.UpdateApplication();
+
+            if (!success)
+                MessageBox.Show("Cannot install the latest version of the application. \n\nPlease check your network connection, or try again later.");
+
+            MessageBox.Show("The application has been upgraded, and will now restart.");
+            menuForm.RestartApplication();
         }
     }
 }

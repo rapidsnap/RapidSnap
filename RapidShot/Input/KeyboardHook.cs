@@ -57,13 +57,17 @@ namespace RapidShot.Input
             if (m.Msg != WM_HOTKEY)
                 return;
 
-            foreach (var hotKey in _hotKeys)
+            try
             {
-                if ((int)m.WParam == hotKey.Key)
+                foreach (var hotKey in _hotKeys)
                 {
-                    hotKey.Value(this, new EventArgs());
+                    if ((int)m.WParam == hotKey.Key)
+                    {
+                        hotKey.Value(this, new EventArgs());
+                    }
                 }
             }
+            catch(Exception) { }
         }
 
         public void Dispose()

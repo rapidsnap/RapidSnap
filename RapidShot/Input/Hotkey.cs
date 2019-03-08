@@ -17,12 +17,14 @@ namespace RapidSnap.Input
         private List<ModifierKeys> modifierKeys = new List<ModifierKeys>();
         private Keys triggerKey = Keys.None;
         private KeyboardHook hook;
+        private readonly Action<object, EventArgs> action;
 
-        public Hotkey(KeyboardHook hook, Button uiButton)
+        public Hotkey(KeyboardHook hook, Button uiButton, Action<object, EventArgs> action)
         {
             this.hook = hook;
             UIButton = uiButton;
             UIButton.Click += (s, e) => Assign();
+            this.action = action;
         }
 
         private void Assign()
@@ -42,6 +44,8 @@ namespace RapidSnap.Input
 
                 hkRecorder.Close();
                 hkRecorder.Dispose();
+
+                Register();
             };
         }
 
@@ -51,11 +55,14 @@ namespace RapidSnap.Input
                 return;
 
             triggerKey = (Keys)Enum.Parse(typeof(Keys), setting[0], true);
-            
+            modifierKeys = new List<ModifierKeys>();
+
             for (int i = 1; i < setting.Count; i++)
                 modifierKeys.Add((ModifierKeys)Enum.Parse(typeof(ModifierKeys), setting[i], true));
 
             UIButton.Text = this.ToString();
+
+            Register();
         }
 
         public StringCollection Save()
@@ -75,7 +82,7 @@ namespace RapidSnap.Input
             return setting;
         }
 
-        public void Register(Action<object, EventArgs> action)
+        private void Register()
         {
             if (ID >= 0)
                 hook.RemoveHotKey(ID);
