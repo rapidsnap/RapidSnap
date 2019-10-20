@@ -73,8 +73,7 @@ namespace RapidShot
                 return;
             }
 
-            var aspect = CalcScreenRes();
-            var rectangle = GetRectangle(PointToScreen(_mouseStartPos), PointToScreen(e.Location), aspect);
+            var rectangle = GetRectangle(PointToScreen(_mouseStartPos), PointToScreen(e.Location));
 
             using (var image = new Bitmap(rectangle.Width, rectangle.Height, PixelFormat.Format24bppRgb))
             {
@@ -113,23 +112,11 @@ namespace RapidShot
             SnapTaken(this, new SnapEventArgs() { Image = image });
         }
 
-        //------------------------
-
-        public Rectangle GetRectangle(Point start, Point end, double aspect = 1)
+        public Rectangle GetRectangle(Point start, Point end)
             => new Rectangle(
-                (int)(Math.Min(start.X, end.X) * aspect),
-                (int)(Math.Min(start.Y, end.Y) * aspect),
-                (int)(Math.Abs(start.X - end.X) * aspect),
-                (int)(Math.Abs(start.Y - end.Y) * aspect));
-
-        private double CalcScreenRes()
-        {
-            var currentDPI = (int)
-                (Registry.GetValue("HKEY_CURRENT_USER\\Control Panel\\Desktop", "LogPixels", null) ??
-                 Registry.GetValue("HKEY_CURRENT_USER\\Control Panel\\Desktop\\WindowMetrics", "AppliedDPI", null) ??
-                 96);
-
-            return currentDPI / (double)96; // calculates factor. 96 are standardized 100% res
-        }
+                (int) Math.Min(start.X, end.X),
+                (int) Math.Min(start.Y, end.Y),
+                (int) Math.Abs(start.X - end.X),
+                (int) Math.Abs(start.Y - end.Y));
     }
 }
