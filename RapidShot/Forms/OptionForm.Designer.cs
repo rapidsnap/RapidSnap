@@ -37,7 +37,7 @@
             this.btn_close = new System.Windows.Forms.Button();
             this.cb_autoUpdate = new System.Windows.Forms.CheckBox();
             this.gb_settings = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lbl_version = new System.Windows.Forms.Label();
             this.gb_save = new System.Windows.Forms.GroupBox();
             this.rb_disk = new System.Windows.Forms.RadioButton();
             this.rb_clipboard = new System.Windows.Forms.RadioButton();
@@ -50,18 +50,21 @@
             // 
             this.gb_hotkeys.Controls.Add(this.btn_hkSnap);
             this.gb_hotkeys.Controls.Add(this.label1);
-            this.gb_hotkeys.Location = new System.Drawing.Point(12, 12);
+            this.gb_hotkeys.Location = new System.Drawing.Point(18, 18);
+            this.gb_hotkeys.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.gb_hotkeys.Name = "gb_hotkeys";
-            this.gb_hotkeys.Size = new System.Drawing.Size(213, 49);
+            this.gb_hotkeys.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.gb_hotkeys.Size = new System.Drawing.Size(320, 75);
             this.gb_hotkeys.TabIndex = 0;
             this.gb_hotkeys.TabStop = false;
             this.gb_hotkeys.Text = "Hotkeys";
             // 
             // btn_hkSnap
             // 
-            this.btn_hkSnap.Location = new System.Drawing.Point(60, 19);
+            this.btn_hkSnap.Location = new System.Drawing.Point(90, 29);
+            this.btn_hkSnap.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btn_hkSnap.Name = "btn_hkSnap";
-            this.btn_hkSnap.Size = new System.Drawing.Size(147, 23);
+            this.btn_hkSnap.Size = new System.Drawing.Size(220, 35);
             this.btn_hkSnap.TabIndex = 1;
             this.btn_hkSnap.Text = "NONE";
             this.btn_hkSnap.UseVisualStyleBackColor = true;
@@ -69,17 +72,19 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 24);
+            this.label1.Location = new System.Drawing.Point(9, 37);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(32, 13);
+            this.label1.Size = new System.Drawing.Size(47, 20);
             this.label1.TabIndex = 1;
             this.label1.Text = "Snap";
             // 
             // btn_update
             // 
-            this.btn_update.Location = new System.Drawing.Point(231, 81);
+            this.btn_update.Location = new System.Drawing.Point(346, 125);
+            this.btn_update.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btn_update.Name = "btn_update";
-            this.btn_update.Size = new System.Drawing.Size(104, 23);
+            this.btn_update.Size = new System.Drawing.Size(156, 35);
             this.btn_update.TabIndex = 1;
             this.btn_update.Text = "Update";
             this.btn_update.UseVisualStyleBackColor = true;
@@ -88,18 +93,20 @@
             // cb_autoStart
             // 
             this.cb_autoStart.AutoSize = true;
-            this.cb_autoStart.Location = new System.Drawing.Point(6, 19);
+            this.cb_autoStart.Location = new System.Drawing.Point(9, 29);
+            this.cb_autoStart.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cb_autoStart.Name = "cb_autoStart";
-            this.cb_autoStart.Size = new System.Drawing.Size(68, 17);
+            this.cb_autoStart.Size = new System.Drawing.Size(101, 24);
             this.cb_autoStart.TabIndex = 2;
             this.cb_autoStart.Text = "Autostart";
             this.cb_autoStart.UseVisualStyleBackColor = true;
             // 
             // btn_close
             // 
-            this.btn_close.Location = new System.Drawing.Point(231, 105);
+            this.btn_close.Location = new System.Drawing.Point(346, 162);
+            this.btn_close.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btn_close.Name = "btn_close";
-            this.btn_close.Size = new System.Drawing.Size(104, 23);
+            this.btn_close.Size = new System.Drawing.Size(156, 35);
             this.btn_close.TabIndex = 3;
             this.btn_close.Text = "Save";
             this.btn_close.UseVisualStyleBackColor = true;
@@ -108,9 +115,10 @@
             // cb_autoUpdate
             // 
             this.cb_autoUpdate.AutoSize = true;
-            this.cb_autoUpdate.Location = new System.Drawing.Point(6, 42);
+            this.cb_autoUpdate.Location = new System.Drawing.Point(9, 65);
+            this.cb_autoUpdate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cb_autoUpdate.Name = "cb_autoUpdate";
-            this.cb_autoUpdate.Size = new System.Drawing.Size(84, 17);
+            this.cb_autoUpdate.Size = new System.Drawing.Size(123, 24);
             this.cb_autoUpdate.TabIndex = 4;
             this.cb_autoUpdate.Text = "Auto update";
             this.cb_autoUpdate.UseVisualStyleBackColor = true;
@@ -119,30 +127,35 @@
             // 
             this.gb_settings.Controls.Add(this.cb_autoUpdate);
             this.gb_settings.Controls.Add(this.cb_autoStart);
-            this.gb_settings.Location = new System.Drawing.Point(231, 12);
+            this.gb_settings.Location = new System.Drawing.Point(346, 18);
+            this.gb_settings.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.gb_settings.Name = "gb_settings";
-            this.gb_settings.Size = new System.Drawing.Size(104, 63);
+            this.gb_settings.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.gb_settings.Size = new System.Drawing.Size(156, 97);
             this.gb_settings.TabIndex = 5;
             this.gb_settings.TabStop = false;
             this.gb_settings.Text = "Settings";
             // 
-            // label2
+            // lbl_version
             // 
-            this.label2.AutoSize = true;
-            this.label2.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label2.Location = new System.Drawing.Point(9, 131);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(72, 13);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "v1.0.0 Rev. 2";
+            this.lbl_version.AutoSize = true;
+            this.lbl_version.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.lbl_version.Location = new System.Drawing.Point(14, 202);
+            this.lbl_version.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_version.Name = "lbl_version";
+            this.lbl_version.Size = new System.Drawing.Size(72, 20);
+            this.lbl_version.TabIndex = 6;
+            this.lbl_version.Text = "vX.X.X.X";
             // 
             // gb_save
             // 
             this.gb_save.Controls.Add(this.rb_disk);
             this.gb_save.Controls.Add(this.rb_clipboard);
-            this.gb_save.Location = new System.Drawing.Point(12, 67);
+            this.gb_save.Location = new System.Drawing.Point(18, 103);
+            this.gb_save.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.gb_save.Name = "gb_save";
-            this.gb_save.Size = new System.Drawing.Size(213, 61);
+            this.gb_save.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.gb_save.Size = new System.Drawing.Size(320, 94);
             this.gb_save.TabIndex = 7;
             this.gb_save.TabStop = false;
             this.gb_save.Text = "Save Screenshot";
@@ -150,9 +163,10 @@
             // rb_disk
             // 
             this.rb_disk.AutoSize = true;
-            this.rb_disk.Location = new System.Drawing.Point(9, 38);
+            this.rb_disk.Location = new System.Drawing.Point(14, 58);
+            this.rb_disk.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.rb_disk.Name = "rb_disk";
-            this.rb_disk.Size = new System.Drawing.Size(86, 17);
+            this.rb_disk.Size = new System.Drawing.Size(123, 24);
             this.rb_disk.TabIndex = 1;
             this.rb_disk.TabStop = true;
             this.rb_disk.Text = "Save to Disk";
@@ -161,9 +175,10 @@
             // rb_clipboard
             // 
             this.rb_clipboard.AutoSize = true;
-            this.rb_clipboard.Location = new System.Drawing.Point(9, 19);
+            this.rb_clipboard.Location = new System.Drawing.Point(14, 29);
+            this.rb_clipboard.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.rb_clipboard.Name = "rb_clipboard";
-            this.rb_clipboard.Size = new System.Drawing.Size(109, 17);
+            this.rb_clipboard.Size = new System.Drawing.Size(159, 24);
             this.rb_clipboard.TabIndex = 0;
             this.rb_clipboard.TabStop = true;
             this.rb_clipboard.Text = "Save to Clipboard";
@@ -171,18 +186,19 @@
             // 
             // OptionForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(345, 150);
+            this.ClientSize = new System.Drawing.Size(518, 231);
             this.Controls.Add(this.gb_save);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lbl_version);
             this.Controls.Add(this.btn_update);
             this.Controls.Add(this.gb_settings);
             this.Controls.Add(this.btn_close);
             this.Controls.Add(this.gb_hotkeys);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "OptionForm";
@@ -209,7 +225,7 @@
         private System.Windows.Forms.Button btn_close;
         private System.Windows.Forms.CheckBox cb_autoUpdate;
         private System.Windows.Forms.GroupBox gb_settings;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lbl_version;
         private System.Windows.Forms.GroupBox gb_save;
         private System.Windows.Forms.RadioButton rb_disk;
         private System.Windows.Forms.RadioButton rb_clipboard;

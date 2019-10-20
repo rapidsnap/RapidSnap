@@ -4,6 +4,7 @@ using RapidSnap.Properties;
 using System;
 using System.Deployment.Application;
 using System.Diagnostics;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace RapidSnap.Forms
@@ -23,7 +24,19 @@ namespace RapidSnap.Forms
 
             cb_autoStart.CheckedChanged += OnAutoStartToggle;
 
+            LoadVersion();
             LoadSettings();
+        }
+
+        private void LoadVersion()
+        {
+            if (ApplicationDeployment.IsNetworkDeployed)
+            {
+                lbl_version.Text = $"v{ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString(4)}";
+                return;
+            }
+
+            lbl_version.Text = $"v{Assembly.GetExecutingAssembly().GetName().Version.ToString()}";
         }
 
         public void LoadSettings()
