@@ -84,8 +84,8 @@ namespace RapidShot
         {
             var fileDiag = new SaveFileDialog()
             {
-                Title = "Speichern des Koordinatensystems",
-                FileName = "Unbenannt",
+                Title = "Save As",
+                FileName = "Unkown",
                 Filter = "PNG |*.png|GIF |*.gif|Bitmap |*.bmp|JPEG |*.jpg",
             };
 
